@@ -9,8 +9,8 @@ const Services = () => {
             </div>
 			<div className="flex flex-col items-start justify-center space-y-5">
 				<div className="flex items-center">
-					<div className="bg-green-900 w-10 h-[3px] mr-4"></div>
-					<small className="font-semibold text-base uppercase text-green-900">Our services</small>
+					<div className="bg-[#2e8284] w-10 h-[3px] mr-4"></div>
+					<small className="font-semibold text-base uppercase text-[#2e8284]">Our services</small>
 				</div>
 				<h1 className="font-semibold text-2xl">The new way to Rent</h1>
 				<p>Efiewura offers complete end to end service on your journey as a tenant</p>
@@ -23,7 +23,7 @@ const Services = () => {
 					<li>Fraud Protection</li>
 					<li>Credit Profiling</li>
 				</div>
-                <button className="bg-green-900 px-5 py-2 text-white">Learn More</button>
+                <button className="bg-[#2e8284] px-5 py-2 text-white">Learn More</button>
 			</div>
 		</main>
 	);

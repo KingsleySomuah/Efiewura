@@ -1,31 +1,59 @@
-import React, { useState } from "react";
-import { apiAddListing } from "../../../services/crud";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
+import { apiGetSingleListing, apiUpdateListing } from "../../../services/crud";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 
-const AddListing = () => {
+const Edit = () => {
 	const navigate = useNavigate();
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false);
+	const { id } = useParams();
 
-	const handleSubmit = async (event) => {
+	const [formData, setFormData] = useState({
+		name: "",
+		category: "",
+		location: "",
+		price: "",
+		amenities: "",
+		description: "",
+	});
+
+	useEffect(() => {
+		const fetchListing = async () => {
+			try {
+				const response = await apiGetSingleListing(id);
+				setFormData(response.data);
+			} catch (error) {
+				console.error(error);
+				toast.error("Failed to load listing data");
+			}
+		};
+		fetchListing();
+	}, [id]);
+
+	const handleUpdate = async (event) => {
 		event.preventDefault();
 
-		setLoading(true) //start loading
-		const data = new FormData(event.target);
+		setLoading(true); //start loading
 
 		try {
-			const response = await apiAddListing(data);
+			const response = await apiUpdateListing(id, formData);
 			console.log(response);
 
-			toast.success("Listing added successfully")
+			toast.success("Listing updated successfully");
 			navigate("/dashboard");
-
 		} catch (error) {
 			console.log(error);
-			toast.error("Failed to Add Listing. Please try again")
+			toast.error("Failed to Update Listing. Please try again");
 		} finally {
-			setLoading(false) //stop loading
+			setLoading(false); //stop loading
 		}
+	};
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData((prev) => ({
+			...prev,
+			[name]: value,
+		}));
 	};
 
 	return (
@@ -36,7 +64,7 @@ const AddListing = () => {
 			</div>
 
 			{/* form */}
-			<form action="" className="p-5" onSubmit={handleSubmit}>
+			<form action="" className="p-5" onSubmit={handleUpdate}>
 				<div className="flex items-center gap-10">
 					<div className="space-y-3 w-3/5">
 						<label htmlFor="" className="text-xl font-semibold text-gray-700 block ">
@@ -45,6 +73,8 @@ const AddListing = () => {
 						<input
 							name="name"
 							type="text"
+							value={formData.name}
+							onChange={handleChange}
 							className=" border border-gray-300 focus:outline-none w-full p-2 rounded-md"
 						/>
 					</div>
@@ -53,6 +83,8 @@ const AddListing = () => {
 							Property Type
 						</label>
 						<select
+							value={formData.category}
+							onChange={handleChange}
 							name="category"
 							id=""
 							className=" border border-gray-300 focus:outline-none w-full p-2 rounded-md"
@@ -71,6 +103,8 @@ const AddListing = () => {
 							Location
 						</label>
 						<input
+							value={formData.location}
+							onChange={handleChange}
 							name="location"
 							type="text"
 							className="border border-gray-300 focus:outline-none w-full p-2 rounded-md"
@@ -81,6 +115,8 @@ const AddListing = () => {
 							Price per month
 						</label>
 						<input
+							value={formData.price}
+							onChange={handleChange}
 							name="price"
 							type="number"
 							className="border border-gray-300 focus:outline-none w-full p-2 rounded-md"
@@ -92,6 +128,8 @@ const AddListing = () => {
 							Amenities
 						</label>
 						<input
+							value={formData.amenities}
+							onChange={handleChange}
 							name="amenities"
 							type="text"
 							className="border border-gray-300 focus:outline-none w-full p-2 rounded-md"
@@ -115,6 +153,8 @@ const AddListing = () => {
 							Add Description
 						</label>
 						<textarea
+							value={formData.description}
+							onChange={handleChange}
 							type="text"
 							name="description"
 							id=""
@@ -123,7 +163,7 @@ const AddListing = () => {
 					</div>
 				</div>
 				<div className="flex justify-center items-center mt-5">
-				<button
+					<button
 						type="submit"
 						disabled={loading}
 						className={`flex items-center justify-center gap-2 px-10 py-2 text-white rounded transition duration-300 ${
@@ -154,7 +194,7 @@ const AddListing = () => {
 								/>
 							</svg>
 						)}
-						<span>{loading ? "Adding Listing" : "Add Listing"}</span>
+						<span>{loading ? "Updating Listing" : "Update Listing"}</span>
 					</button>
 				</div>
 			</form>
@@ -162,4 +202,4 @@ const AddListing = () => {
 	);
 };
 
-export default AddListing;
+export default Edit;
