@@ -18,13 +18,13 @@ export const apiDeleteListing = (id) => {
 };
 
 export const apiUpdateListing = (id, payload) => {
-	return apiClient.patch(`/listings/${id}`, payload);
+	return apiClient.put(`/listings/${id}`, payload);
 };
 
 export const apiBookListing = (payload) => {
 	return apiClient.post(`/booking`, payload, {
 		headers: {
-			'Content-Type':'application/json'
-		}
-	})
-}
+			"Content-Type": "application/json",
+		},
+	});
+};

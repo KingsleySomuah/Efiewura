@@ -104,7 +104,7 @@ const DashHome = () => {
 
 										<td className="flex items-center justify-center mt-5">
 											<Link
-												to={`/dashboard/edit/${listing.id}`}
+												to={`/dashboard/update/${listing.id}`}
 												className="text-gray-600 hover:text-blue-500"
 											>
 												<HiOutlinePencil size={18} />

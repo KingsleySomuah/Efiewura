@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SingleListing from "./components/landing/SingleListing";
 import ScheduledViews from "./components/dashboards/landlord/ScheduledViews";
-import Edit from "./components/dashboards/landlord/Edit";
+import Update from "./components/dashboards/landlord/Update";
 
 function App() {
 	return (
@@ -34,7 +34,7 @@ function App() {
 						<Route index={true} element={<DashHome />} />
 						<Route path="add-listing" element={<AddListing />} />
 						<Route path="scheduled-views" element={<ScheduledViews />} />
-						<Route path="edit/:id" element={<Edit />} />
+						<Route path="update/:id" element={<Update />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

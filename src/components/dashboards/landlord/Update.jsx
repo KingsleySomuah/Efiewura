@@ -3,7 +3,7 @@ import { apiGetSingleListing, apiUpdateListing } from "../../../services/crud";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 
-const Edit = () => {
+const Update = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const { id } = useParams();
@@ -21,7 +21,8 @@ const Edit = () => {
 		const fetchListing = async () => {
 			try {
 				const response = await apiGetSingleListing(id);
-				setFormData(response.data);
+				// setFormData(response.data);
+				console.log(response)
 			} catch (error) {
 				console.error(error);
 				toast.error("Failed to load listing data");
@@ -202,4 +203,4 @@ const Edit = () => {
 	);
 };
 
-export default Edit;
+export default Update;
